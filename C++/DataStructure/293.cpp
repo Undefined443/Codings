@@ -1,36 +1,52 @@
 #pragma GCC diagnostic error "-std=c++14"
 
 #include <iostream>
-#include <exception>
-#include <windows.h>
+#include <stdexcept>
 
 using namespace std;
 
 int main() {
-    int n, i;
-    for (int j = 0; j < 20; ++j) {
-        static int i = 2;
-        int temp = i;
-        i = 3 * i / 2;
-        if (i - i / 3 == temp) {
-            cout << i << " ";
-        } else {
-            ++i;
-            if (i - i / 3 == temp) {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN); //设置前景色为高亮绿色
+    try {
+        for (int j = 0; j < 15; ++j) {
+            static int i = 3; //位置
+            //逆推 i = i - i / 3
+            int temp = i;
+            i = 3 * i / 2;
+            if (!(i % 3) && i - i / 3 == temp) {
                 cout << i << " ";
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE); //设置前景色为白色
-                continue;
+            } else {
+                ++i;
+                if (!(i % 3) && i - i / 3 == temp) {
+                    cout << "\b[" << i << "]";
+                    continue;
+                }
+                i -= 2;
+                if (!(i % 3) && i - i / 3 == temp) {
+                    cout << "\b<" << i << ">";
+                    continue;
+                }
+                throw runtime_error(to_string(temp) + "reverse i = i - i / 3");
             }
-            i -= 2;
-            if (i - i / 3 == temp) {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED); //设置前景色为高亮红色
+            //逆推 i = i - i / 2
+            temp = i;
+            i = 2 * i - 1;
+            if (!(i % 2) && i - i / 2 == temp) {
                 cout << i << " ";
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE); //设置前景色为白色
-                continue;
+            } else {
+                ++i;
+                if (!(i % 2) && i - i / 2 == temp) {
+                    cout << "\b[" << i << "]";
+                    continue;
+                }
+                i -= 2;
+                if (!(i % 2) && i - i / 2 == temp) {
+                    cout << "\b<" << i << ">";
+                    continue;
+                }
+                throw runtime_error(to_string(temp) + "reverse i = i - i / 3");
             }
-            throw exception();
         }
-        i = 2 * i - 1;
+    } catch (runtime_error &e) {
+        cout << endl << "an error occurred at i = " << e.what();
     }
 }
