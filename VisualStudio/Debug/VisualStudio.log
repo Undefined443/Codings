@@ -1,0 +1,5 @@
+﻿  source.cpp
+C:\Users\Windows 10\OneDrive - stu.xidian.edu.cn\Projects\VisualStudio\source.cpp(70,31): warning C4244: “*=”: 从“double”转换到“long”，可能丢失数据
+C:\Users\Windows 10\OneDrive - stu.xidian.edu.cn\Projects\VisualStudio\source.cpp(71,32): warning C4244: “*=”: 从“double”转换到“long”，可能丢失数据
+C:\Users\Windows 10\OneDrive - stu.xidian.edu.cn\Projects\VisualStudio\source.cpp(72,35): warning C4244: “*=”: 从“double”转换到“unsigned int”，可能丢失数据
+  VisualStudio.vcxproj -> C:\Users\Windows 10\OneDrive - stu.xidian.edu.cn\Projects\VisualStudio\Debug\VisualStudio.exe

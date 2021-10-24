@@ -1,0 +1,11 @@
+name: IceCreamScoop
+ 
+author: Your Name Here
+ 
+main: org.cadenhead.minecraft.IceCreamScoop
+ 
+commands:
+    icecreamscoop:
+        description: Scoop away land around the player.
+         
+version: 1.0

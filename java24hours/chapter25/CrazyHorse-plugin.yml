@@ -1,0 +1,11 @@
+name: CrazyHorse
+
+author: Your Name Here
+ 
+main: org.cadenhead.minecraft.CrazyHorse
+
+commands:
+    crazyhorse:
+        description: Spawn 1-11 horse-riding zombies.
+ 
+version: 1.0

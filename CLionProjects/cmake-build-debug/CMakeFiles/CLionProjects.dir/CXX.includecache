@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Windows10/OneDrive - stu.xidian.edu.cn/Projects/CLionProjects/main.cpp
+iostream
+-
+algorithm
+-
+vector
+-
+string
+-
+functional
+-
+iterator
+-
+

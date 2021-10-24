@@ -1,0 +1,11 @@
+name: Cowabunga
+
+author: Your Name Here
+ 
+main: org.cadenhead.minecraft.Cowabunga
+ 
+commands:
+    cowabunga:
+        description: Come to me, mushroom cow friends.
+         
+version: 1.0

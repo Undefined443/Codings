@@ -1,0 +1,11 @@
+name: ChickenSummon
+
+author: Your Name Here
+ 
+main: org.cadenhead.minecraft.ChickenSummon
+ 
+commands:
+    chickensummon:
+        description: Come to me, chicken friends.
+         
+version: 1.0

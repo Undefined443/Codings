@@ -1,0 +1,13 @@
+name: LightningStorm
+
+author: Your Name Here
+ 
+main: org.cadenhead.minecraft.LightningStorm
+ 
+commands:
+    lightningstorm:
+        description: Hit every living mob with lightning.
+    mobcount:
+        description: Count of living mobs.
+         
+version: 1.0
