@@ -1,6 +1,0 @@
-#ifndef CLIONPROJECTS___BOSS_BLOGPARK_H
-#define CLIONPROJECTS___BOSS_BLOGPARK_H
-
-unsigned long long FIB(int k, int m);
-
-#endif //CLIONPROJECTS___BOSS_BLOGPARK_H
