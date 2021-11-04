@@ -1,3 +1,0 @@
-C:/Users/Windows10/OneDrive - stu.xidian.edu.cn/Projects/C++/DataStructure/cmake-build-debug/CMakeFiles/DataStructure.dir
-C:/Users/Windows10/OneDrive - stu.xidian.edu.cn/Projects/C++/DataStructure/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Windows10/OneDrive - stu.xidian.edu.cn/Projects/C++/DataStructure/cmake-build-debug/CMakeFiles/rebuild_cache.dir
