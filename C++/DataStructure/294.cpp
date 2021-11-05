@@ -6,7 +6,7 @@ using namespace std;
 int main() {
   int n;
   cin >> n;
-  vector vec(n);
+  vector<int> vec;
   for (int i = 0; i < n; ++i) {
     int temp;
     cin >> temp;
@@ -16,6 +16,6 @@ int main() {
     cout << vec[i] << " ";
   }
   for (int i = 1; i < n; i += 2) {
-    cout << vec [i] << " ";
+    cout << vec[i] << " ";
   }
 }

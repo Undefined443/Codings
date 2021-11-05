@@ -1,3 +1,5 @@
+#pragma GCC diagnostic error "-std=c++14"
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -8,7 +10,7 @@ int main() {
   int m,n;
   cin >> m >> n;
   n += m;
-  vector<int> vec(n);
+  vector<int> vec;
   for (int i = 0; i < n; ++i) {
     int temp;
     cin >> temp;
