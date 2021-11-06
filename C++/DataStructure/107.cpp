@@ -117,7 +117,7 @@ int main() {
         return 0;
     }
     bool first = true;
-    for (Point p : track) {
+    for (Point p: track) {
         if (!first) cout << "," << flush;
         cout << "(" << p.i << "," << p.j << "," << p.dir << ")" << flush;
         first = false;
