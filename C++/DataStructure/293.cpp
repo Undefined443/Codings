@@ -8,6 +8,9 @@ using namespace std;
 int main() {
     int n;
     cin >> n;
+    if (n == 0) {
+        return 0;
+    }
     queue<int> que;
     for (int i = 1; i <= n; ++i) {
         que.push(i);
