@@ -18,7 +18,7 @@ int main() {
     int front;
     while (que.size() > 3) {
         auto len = que.size();
-        for (int i = 1; i <= len && que.size() > 3; ++i) {
+        for (int i = 1; i <= len; ++i) {
             if (i % 2 == 0) {
                 que.pop();
             } else {
@@ -29,7 +29,7 @@ int main() {
         }
         if (que.size() <= 3) break;
         len = que.size();
-        for (int i = 1; i <= len && que.size() > 3; ++i) {
+        for (int i = 1; i <= len; ++i) {
             if (i % 3 == 0) {
                 que.pop();
             } else {
