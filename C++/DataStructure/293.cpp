@@ -44,7 +44,8 @@ int main() {
         que.pop();
         que.push(front);
     }
-    for (int i = 0; i < (n < 3 ? n : 3); ++i) {
+    auto len = que.size();
+    for (int i = 0; i < len; ++i) {
         cout << que.front() << " ";
         que.pop();
     }
