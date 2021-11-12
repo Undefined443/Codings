@@ -1,52 +1,52 @@
 #pragma GCC diagnostic error "-std=c++14"
 
 #include <iostream>
-#include <stdexcept>
+#include <queue>
 
 using namespace std;
 
 int main() {
-    try {
-        for (int j = 0; j < 15; ++j) {
-            static int i = 3; //位置
-            //逆推 i = i - i / 3
-            int temp = i;
-            i = 3 * i / 2;
-            if (!(i % 3) && i - i / 3 == temp) {
-                cout << i << " ";
+    int n;
+    cin >> n;
+    if (n == 0) {
+        return 0;
+    }
+    queue<int> que;
+    for (int i = 1; i <= n; ++i) {
+        que.push(i);
+    }
+    int front;
+    while (que.size() > 3) {
+        auto len = que.size();
+        for (int i = 1; i <= len; ++i) {
+            if (i % 2 == 0) {
+                que.pop();
             } else {
-                ++i;
-                if (!(i % 3) && i - i / 3 == temp) {
-                    cout << "\b[" << i << "]";
-                    continue;
-                }
-                i -= 2;
-                if (!(i % 3) && i - i / 3 == temp) {
-                    cout << "\b<" << i << ">";
-                    continue;
-                }
-                throw runtime_error(to_string(temp) + "reverse i = i - i / 3");
-            }
-            //逆推 i = i - i / 2
-            temp = i;
-            i = 2 * i - 1;
-            if (!(i % 2) && i - i / 2 == temp) {
-                cout << i << " ";
-            } else {
-                ++i;
-                if (!(i % 2) && i - i / 2 == temp) {
-                    cout << "\b[" << i << "]";
-                    continue;
-                }
-                i -= 2;
-                if (!(i % 2) && i - i / 2 == temp) {
-                    cout << "\b<" << i << ">";
-                    continue;
-                }
-                throw runtime_error(to_string(temp) + "reverse i = i - i / 3");
+                front = que.front();
+                que.pop();
+                que.push(front);
             }
         }
-    } catch (runtime_error &e) {
-        cout << endl << "an error occurred at i = " << e.what();
+        if (que.size() <= 3) break;
+        len = que.size();
+        for (int i = 1; i <= len; ++i) {
+            if (i % 3 == 0) {
+                que.pop();
+            } else {
+                front = que.front();
+                que.pop();
+                que.push(front);
+            }
+        }
+    }
+    //调整队头
+    while ((front = que.front()) != 1) {
+        que.pop();
+        que.push(front);
+    }
+    auto len = que.size();
+    for (int i = 0; i < len; ++i) {
+        cout << que.front() << " ";
+        que.pop();
     }
 }
