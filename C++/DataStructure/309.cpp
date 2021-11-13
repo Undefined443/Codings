@@ -67,8 +67,8 @@ Matrix Matrix::operator+(Matrix &M) {
 }
 
 void Matrix::print() {
-    for (vector<int> &v : B) {
-        for (int i : v) {
+    for (vector<int> &v: B) {
+        for (int i: v) {
             cout << i << " ";
         }
         cout << endl;

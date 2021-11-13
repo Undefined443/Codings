@@ -26,7 +26,7 @@ int main() {
             ++k;
             //这里加一个判断
 //            if (charVec[j] != charVec[k]) {
-                next.push_back(k);
+            next.push_back(k);
 //            } else { //在匹配时，如果后缀之后失配，那么就让前缀之后再次与之尝试匹配。因此如果前缀之后和后缀之后相等，就一定再次失配。因此这里直接递归 k 的值。
 //                next.push_back(next[k]);
 //            }
@@ -34,7 +34,7 @@ int main() {
             k = next[k];
         }
     }
-    for (int i : next) {
+    for (int i: next) {
         cout << i << " ";
     }
 }
