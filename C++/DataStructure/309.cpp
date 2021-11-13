@@ -58,6 +58,8 @@ Matrix Matrix::operator+(Matrix &M) {
             if (temp) {
                 C.V.push(temp);
                 C.B[i][j] = 1;
+            } else {
+                C.B[i][j] = 0;
             }
         }
     }
