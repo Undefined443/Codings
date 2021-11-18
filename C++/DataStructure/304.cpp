@@ -1,4 +1,4 @@
-#pragma GCC diagnostic error "-std=c++14"
+#pragma GCC diagnostic ignored "-Wunused"
 
 #include <iostream>
 #include <vector>
@@ -29,31 +29,32 @@ ostream &operator<<(ostream &os, const Arc &arc) {
 
 class Node {
 private:
-    static int flag;
+    static int flag; //用于给顶点分类的辅助变量
 public:
-    int index;
-    int category;
+    int index;       //顶点名
+    int category;    //顶点的类别
 
     Node();
 };
 
-int Node::flag = 1;
+int Node::flag = 0;
 
-Node::Node() : index(flag++), category(index) {} //每个顶点自成一类
+Node::Node() : index(flag++), category(index) {} //给每个顶点命名并分类。顶点的初始类别就是自己的名字
 
 int main() {
     int n, m;
     cin >> n >> m;
-    vector<Node> nodes(n);
-    vector<Arc> arcs;
+    vector<Node> nodes(n); //创建一个存储了 n 个顶点的顶点集
+    vector<Arc> arcs;      //边集
+    //输入边
     for (int i = 0; i < m; ++i) {
         Arc temp;
         cin >> temp;
         arcs.push_back(temp);
     }
-    sort(arcs.begin(), arcs.end(), [](const Arc &A1, const Arc &A2) { return A1.weight < A2.weight; }); //按权排序
-    vector<Arc> spanningTree; //生成树
-    for (auto it = arcs.begin(); spanningTree.size() < n - 1; ++it) {
+    sort(arcs.begin(), arcs.end(), [](const Arc &A1, const Arc &A2) { return A1.weight < A2.weight; }); //将边按权值升序排序
+    int totalEdge = 0; //用于记录已输出的边数
+    for (auto it = arcs.begin(); totalEdge < n - 1; ++it) {
         //在顶点集中确定边的两顶点所属类别
         int from_category = find_if(nodes.begin(), nodes.end(),
                                     [it](const Node &n) {
@@ -63,15 +64,14 @@ int main() {
                                   [it](const Node &n) {
                                       return n.index == it->to;
                                   })->category;
-        if (from_category != to_category) { //边的两顶点不属于同一类，可以将边加入生成树
+        if (from_category != to_category) { //边的两端点不属于同一类，可以将边加入生成树。这里直接将边输出
+            //将所有和 to 类别相同的结点的类别都转成 from 的类别
             for_each(nodes.begin(), nodes.end(),
                      [from_category, to_category](Node &n) {
                          n.category = (n.category == to_category) ? from_category : n.category;
-                     }); //将所有和 to 类别相同的结点的类别都转成 from 的类别
-            spanningTree.push_back(*it);
+                     });
+            cout << *it << endl;
+            ++totalEdge;
         }
-    }
-    for (const Arc &arc: spanningTree) {
-        cout << arc << endl;
     }
 }
