@@ -12,11 +12,19 @@ public:
     int to;
     int weight;
 
-    void input();
+    friend istream &operator>>(istream &is, Arc &arc);
+
+    friend ostream &operator<<(ostream &os, const Arc &arc);
 };
 
-void Arc::input() {
-    cin >> from >> to >> weight;
+istream &operator>>(istream &is, Arc &arc) {
+    is >> arc.from >> arc.to >> arc.weight;
+    return is;
+}
+
+ostream &operator<<(ostream &os, const Arc &arc) {
+    os << arc.from << " " << arc.to << " " << arc.weight;
+    return os;
 }
 
 class Node {
@@ -40,28 +48,30 @@ int main() {
     vector<Arc> arcs;
     for (int i = 0; i < m; ++i) {
         Arc temp;
-        temp.input();
+        cin >> temp;
         arcs.push_back(temp);
     }
-    sort(arcs.begin(), arcs.end(), [](const Arc &A1, const Arc &A2) { return A1.weight < A2.weight; });
-    vector<Arc> spanningTree; //记录已选择的边数
-    auto candidateArc = arcs.begin();
-    while (spanningTree.size() < n - 1) {
-        //在顶点集中定位边的两顶点
+    sort(arcs.begin(), arcs.end(), [](const Arc &A1, const Arc &A2) { return A1.weight < A2.weight; }); //按权排序
+    vector<Arc> spanningTree; //生成树
+    for (auto it = arcs.begin(); spanningTree.size() < n - 1; ++it) {
+        //在顶点集中确定边的两顶点所属类别
         int from_category = find_if(nodes.begin(), nodes.end(),
-                            [candidateArc](const Node &n) -> bool { return n.index == candidateArc->from; })->category;
+                                    [it](const Node &n) {
+                                        return n.index == it->from;
+                                    })->category;
         int to_category = find_if(nodes.begin(), nodes.end(),
-                          [candidateArc](const Node &n) -> bool { return n.index == candidateArc->to; })->category;
+                                  [it](const Node &n) {
+                                      return n.index == it->to;
+                                  })->category;
         if (from_category != to_category) { //边的两顶点不属于同一类，可以将边加入生成树
             for_each(nodes.begin(), nodes.end(),
                      [from_category, to_category](Node &n) {
                          n.category = (n.category == to_category) ? from_category : n.category;
                      }); //将所有和 to 类别相同的结点的类别都转成 from 的类别
-            spanningTree.push_back(*candidateArc);
+            spanningTree.push_back(*it);
         }
-        ++candidateArc;
     }
     for (const Arc &arc: spanningTree) {
-        cout << arc.from << " " << arc.to << " " << arc.weight << endl;
+        cout << arc << endl;
     }
 }
