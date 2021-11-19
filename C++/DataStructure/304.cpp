@@ -1,4 +1,4 @@
-#pragma GCC diagnostic ignored "-Wunused"
+#pragma GCC diagnostic error "-std=c++14"
 
 #include <iostream>
 #include <vector>
