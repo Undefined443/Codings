@@ -39,7 +39,7 @@ int main() {
     int n, m;
     cin >> n >> m;
     vector<Node> nodes(n); //顶点数组
-    vector<int>  subGraph; //记录连通子图数
+    vector<int> subGraph;  //记录连通子图数
 
     //输入边集
     for (int i = 0; i < m; ++i) {
