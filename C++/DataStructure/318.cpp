@@ -6,12 +6,12 @@
 
 using namespace std;
 
+using size_type = string::size_type;
+
 class Node {
 public:
     char index;
     Node *lchild{}, *rchild{};
-    bool isLAssigned = false;
-    bool isRAssigned = false;
 
     explicit Node(char c);
 };
@@ -26,40 +26,15 @@ void PostOrderTraverse(Node *node) {
     }
 }
 
-Node *createTree_VLRandLVR(const string &VLR, string LVR) {
+//返回由 [LVR_begin, LVR_end) 构建的二叉树的根结点；VLR 是先序，LVR 是中序
+Node *createBiTreeByLTAndLVR(const string &VLR, const string &LVR, size_type LVR_begin, size_type LVR_end) {
+    static size_type i;
     Node *root{};
-    stack<Node *> stk;
-    for (char i: VLR) {
-        Node *node = new Node(i);
-        string::size_type c = LVR.find(i);
-        //判断当前结点是否有左右孩子
-        if (c == 0 || LVR[c - 1] == CHAR_MAX) {
-            node->isLAssigned = true;
-        }
-        if (c + 1 >= LVR.size() || LVR[c + 1] == CHAR_MAX) {
-            node->isRAssigned = true;
-        }
-        if (!root) {
-            root = node;
-            stk.push(node);
-            LVR[c] = CHAR_MAX;
-            continue;
-        }
-        //处理当前结点和父节点的关系
-        auto top = stk.top();
-        while (top->isLAssigned && top->isRAssigned) {
-            stk.pop();
-            top = stk.top();
-        }
-        if (!top->isLAssigned) {
-            top->lchild = node;
-            top->isLAssigned = true;
-        } else {
-            top->rchild = node;
-            top->isRAssigned = true;
-        }
-        stk.push(node);
-        LVR[c] = CHAR_MAX;
+    if (LVR_begin < LVR_end) {
+        root = new Node(VLR[i++]); //先序的首结点为根结点
+        auto LVR_root = LVR.find(root->index); //在中序中定位根结点
+        root->lchild = createBiTreeByLTAndLVR(VLR, LVR, LVR_begin, LVR_root);
+        root->rchild = createBiTreeByLTAndLVR(VLR, LVR, LVR_root + 1, LVR_end);
     }
     return root;
 }
@@ -68,6 +43,6 @@ int main() {
     string VLR; //先序序列
     string LVR; //中序序列
     cin >> VLR >> LVR;
-    Node *root = createTree_VLRandLVR(VLR, LVR);
+    Node *root = createBiTreeByLTAndLVR(VLR, LVR, 0, LVR.size());
     PostOrderTraverse(root);
 }
