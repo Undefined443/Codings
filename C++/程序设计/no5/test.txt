@@ -1,0 +1,164 @@
+Loading archive from file...
+Books...
+ID: 1
+Name: book1
+Inventory: 10
+Borrowed by:
+null
+Users...
+All of the information has been loaded.
+User: administor
+.            Administor            .
+. 1-> Add book information         .
+. 2-> Modify book information      .
+. 3-> Delete book                  .
+. 4-> Add User information         .
+. 5-> Modify User information      .
+. 6-> Delete  User                 .
+. 7-> Change user                  .
+. 8-> Quit                         .
+. Please select a number           .
+>1
+--------Add book information-------
+Book ID:
+>2
+Book name:
+>book2
+Book inventory:
+>1
+Book "book2" has been added
+
+User: administor
+.            Administor            .
+. 1-> Add book information         .
+. 2-> Modify book information      .
+. 3-> Delete book                  .
+. 4-> Add User information         .
+. 5-> Modify User information      .
+. 6-> Delete  User                 .
+. 7-> Change user                  .
+. 8-> Quit                         .
+. Please select a number           .
+>2
+------Modify book information------
+Book ID\name:
+>book1
+New name:
+>modifiedBook1
+New book inventory:
+>0
+Book information modified successfully
+
+User: administor
+.            Administor            .
+. 1-> Add book information         .
+. 2-> Modify book information      .
+. 3-> Delete book                  .
+. 4-> Add User information         .
+. 5-> Modify User information      .
+. 6-> Delete  User                 .
+. 7-> Change user                  .
+. 8-> Quit                         .
+. Please select a number           .
+>3
+------------Delete book------------
+Book ID\name
+>1
+Book "modifiedBook1" has been deleted
+
+User: administor
+.            Administor            .
+. 1-> Add book information         .
+. 2-> Modify book information      .
+. 3-> Delete book                  .
+. 4-> Add User information         .
+. 5-> Modify User information      .
+. 6-> Delete  User                 .
+. 7-> Change user                  .
+. 8-> Quit                         .
+. Please select a number           .
+>4
+--------Add User information-------
+User ID:
+>1
+User name:
+>user1
+User "user1" has been added
+
+User: administor
+.            Administor            .
+. 1-> Add book information         .
+. 2-> Modify book information      .
+. 3-> Delete book                  .
+. 4-> Add User information         .
+. 5-> Modify User information      .
+. 6-> Delete  User                 .
+. 7-> Change user                  .
+. 8-> Quit                         .
+. Please select a number           .
+>7
+------------Change user------------
+Log in: <-userType userName>
+>-u user1
+
+User: user1
+.               User               .
+. 1-> Borrow book                  .
+. 2-> Return book                  .
+. 3-> Search book                  .
+. 4-> Search the borrowed book     .
+. 5-> Change user                  .
+. 6-> Quit                         .
+. Please select a number           .
+>1
+------------Borrow book------------
+Book ID\name:
+>2
+You have borrowed "book2"
+
+User: user1
+.               User               .
+. 1-> Borrow book                  .
+. 2-> Return book                  .
+. 3-> Search book                  .
+. 4-> Search the borrowed book     .
+. 5-> Change user                  .
+. 6-> Quit                         .
+. Please select a number           .
+>1
+------------Borrow book------------
+You have already borrowed a book, return it before borrowing a new one.
+
+User: user1
+.               User               .
+. 1-> Borrow book                  .
+. 2-> Return book                  .
+. 3-> Search book                  .
+. 4-> Search the borrowed book     .
+. 5-> Change user                  .
+. 6-> Quit                         .
+. Please select a number           .
+>3
+------------Search book------------
+Book ID\name:
+>2
+-------------Book info-------------
+ID:             2
+Name:           book2
+Inventory:      0
+Borrowed by:
+user1
+----------------end----------------
+
+User: user1
+.               User               .
+. 1-> Borrow book                  .
+. 2-> Return book                  .
+. 3-> Search book                  .
+. 4-> Search the borrowed book     .
+. 5-> Change user                  .
+. 6-> Quit                         .
+. Please select a number           .
+>4
+------Search the borrowed book-----
+You have borrowed "book2".
