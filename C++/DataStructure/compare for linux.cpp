@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char **argv) {
     ifstream file1(argv[1], ios::in);
     ifstream file2(argv[2], ios::in);
     string str1;
@@ -16,7 +16,7 @@ int main() {
         if (str1 != str2) {
             cerr << "Difference at line " << line << ":" << endl;
             cout << str1 << endl;
-            cout << str2 << endl
+            cout << str2 << endl;
         }
         ++line;
     }
