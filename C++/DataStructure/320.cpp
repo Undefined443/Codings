@@ -19,7 +19,7 @@ public:
 Node::Node(int val) : m_val(val) {}
 
 //返回由 [LVR_begin, LVR_end) 构建的二叉树的根结点；LT 是层序，LVR 是中序
-Node *createBiTreeByLTAndLVR(const vector<int> &LT, iter LVR_begin, iter LVR_end) { //在分析时，将整个二叉树分解成只有根结点和左右孩子的最小子树
+Node *createBiTreeByLTAndLVR(const vector<int> &LT, iter LVR_begin, iter LVR_end) {
     Node *root{};
     if (LVR_begin < LVR_end) {
         iter LVR_root;
