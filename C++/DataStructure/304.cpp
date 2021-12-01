@@ -1,4 +1,5 @@
-#pragma GCC diagnostic error "-std=c++14"
+//使用并查集
+#pragma GCC diagnostic error "-std=c++11"
 
 #include <iostream>
 #include <vector>
@@ -8,70 +9,71 @@ using namespace std;
 
 class Arc {
 public:
-    int from;
-    int to;
+    int v1;
+    int v2;
     int weight;
+
+    Arc() = default;
 
     friend istream &operator>>(istream &is, Arc &arc);
 
     friend ostream &operator<<(ostream &os, const Arc &arc);
+
+    friend bool operator<(const Arc &e1, const Arc &e2);
 };
 
 istream &operator>>(istream &is, Arc &arc) {
-    is >> arc.from >> arc.to >> arc.weight;
+    int v1, v2;
+    is >> v1 >> v2 >> arc.weight;
+    arc.v1 = v1 < v2 ? v1 - 1 : v2 - 1;
+    arc.v2 = v1 < v2 ? v2 - 1 : v1 - 1;
     return is;
 }
 
 ostream &operator<<(ostream &os, const Arc &arc) {
-    os << arc.from << " " << arc.to << " " << arc.weight;
+    os << arc.v1 + 1 << " " << arc.v2 + 1 << " " << arc.weight;
     return os;
 }
 
-class Node {
-private:
-    static int flag; //用于给顶点分类的辅助变量
-public:
-    int index;       //顶点名
-    int category;    //顶点的类别
+bool operator<(const Arc &e1, const Arc &e2) {
+    return e1.weight < e2.weight;
+}
 
-    Node();
-};
+vector<int> *parent{};
 
-int Node::flag = 0;
+int findParent(int i) {
+    return i == (*parent)[i] ? i : (*parent)[i] = findParent((*parent)[i]);
+}
 
-Node::Node() : index(flag++), category(index) {} //给每个顶点命名并分类。顶点的初始类别就是自己的名字
+bool merge(int v1, int v2) {
+    int v1_parent = findParent(v1);
+    int v2_parent = findParent(v2);
+    if (v1_parent != v2_parent) {
+        (*parent)[v2_parent] = v1_parent;
+        return true;
+    }
+    return false;
+}
 
 int main() {
     int n, m;
     cin >> n >> m;
-    vector<Node> nodes(n); //创建一个存储了 n 个顶点的顶点集
-    vector<Arc> arcs;      //边集
-    //输入边
+    parent = new vector<int>(n);
+    int flag = 0;
+    for_each(parent->begin(), parent->end(), [&flag](int &i) { i = flag++; });
+    //输入边集
+    vector<Arc> arcs;
     for (int i = 0; i < m; ++i) {
-        Arc temp;
+        Arc temp{};
         cin >> temp;
         arcs.push_back(temp);
     }
-    sort(arcs.begin(), arcs.end(), [](const Arc &A1, const Arc &A2) { return A1.weight < A2.weight; }); //将边按权值升序排序
-    int totalEdge = 0; //用于记录已输出的边数
-    for (auto it = arcs.begin(); totalEdge < n - 1; ++it) {
-        //在顶点集中确定边的两顶点所属类别
-        int from_category = find_if(nodes.begin(), nodes.end(),
-                                    [it](const Node &n) {
-                                        return n.index == it->from;
-                                    })->category;
-        int to_category = find_if(nodes.begin(), nodes.end(),
-                                  [it](const Node &n) {
-                                      return n.index == it->to;
-                                  })->category;
-        if (from_category != to_category) { //边的两端点不属于同一类，可以将边加入生成树。这里直接将边输出
-            //将所有和 to 类别相同的结点的类别都转成 from 的类别
-            for_each(nodes.begin(), nodes.end(),
-                     [from_category, to_category](Node &n) {
-                         n.category = (n.category == to_category) ? from_category : n.category;
-                     });
+    sort(arcs.begin(), arcs.end()); //将边按权值升序排序
+    int totalEdges = 0; //用于记录已输出的边数
+    for (auto it = arcs.begin(); totalEdges < n - 1; ++it) {
+        if (merge(it->v1, it->v2)) {
             cout << *it << endl;
-            ++totalEdge;
+            ++totalEdges;
         }
     }
 }
