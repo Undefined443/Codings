@@ -1,90 +1,56 @@
+//使用并查集
 #pragma GCC diagnostic error "-std=c++11"
 
 #include <iostream>
 #include <vector>
-#include <stack>
 #include <algorithm>
-
 
 using namespace std;
 
-//用邻接表存储图
 class Node {
-private:
-    static int flag;                     //用于给顶点命名的辅助变量
 public:
-    int index;                           //顶点名
-    bool visited = false;                //表示顶点是否访问过
-    vector<vector<Node>::iterator> adjs; //邻接表
+    int index{};  //顶点名
+    int weight = 1; //表示该集合有多少个元素
 
-    Node();
-
-    bool visit();
+    Node() = default;
 };
 
-int Node::flag = 0;
+vector<int> *parent{};
+vector<Node> *nodes{};
 
-Node::Node() : index(++flag) {}
+int findParent(int i) { //寻找结点 n 所属集合的代表元素
+    return i == (*parent)[i] ? i : (*parent)[i] = findParent((*parent)[i]); //若自己不是所属集合的代表元素，那么代表元素就是父结点所属集合的代表元素
+}
 
-//如果顶点未访问过，则访问该顶点，返回 true；否则返回 false
-bool Node::visit() {
-    if (!visited) {
-        visited = true;
-        return true;
+void merge(int v1, int v2) {
+    //获取两结点所属集合的代表元素
+    int v1_parent = findParent(v1);
+    int v2_parent = findParent(v2);
+    if (v1_parent != v2_parent) { //两结点属于不同集合，可以归并
+        //把集合 2 归入集合 1
+        (*parent)[v2_parent] = v1_parent;
+        (*nodes)[v1_parent].weight += (*nodes)[v2_parent].weight;
+        (*nodes)[v2_parent].weight = 0;
     }
-    return false;
 }
 
 int main() {
-    int n, m;
+    int n, m; //顶点数，边数
     cin >> n >> m;
-    vector<Node> nodes(n); //顶点数组
-    vector<int> subGraph;  //记录连通子图数
-
-    //输入边集
+    int flag = 0;
+    parent = new vector<int>(n);
+    for_each(parent->begin(), parent->end(), [&flag](int &i) { i = flag++; });
+    flag = 0;
+    nodes = new vector<Node>(n);
+    for_each(nodes->begin(), nodes->end(), [&flag](Node &i) { i.index = flag++; });
     for (int i = 0; i < m; ++i) {
-        int from, to;
-        cin >> from >> to;
-        //将边的两端点分别加入到两端点各自的邻接表
-        auto from_node = find_if(nodes.begin(), nodes.end(),
-                                 [from](const Node &n) {
-                                     return n.index == from;
-                                 });
-        auto to_node = find_if(nodes.begin(), nodes.end(),
-                               [to](const Node &n) {
-                                   return n.index == to;
-                               });
-        from_node->adjs.push_back(to_node);
-        to_node->adjs.push_back(from_node);
+        int v1, v2;
+        cin >> v1 >> v2;
+        merge(v1 - 1, v2 - 1);
     }
-
-    //DFS
-    stack<vector<Node>::iterator> nodeStack;
-    for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-        if (it->visit()) { //如果找到未访问过的顶点，则访问该顶点，并进行 DFS
-            nodeStack.push(it);
-            int nodeCount = 1; //记录该子图的顶点数
-            while (!nodeStack.empty()) {
-                auto top = nodeStack.top(); //取栈顶元素
-                bool isAllVisited = true;
-                for (auto pnode: top->adjs) { //检查栈顶元素是否有未访问过的邻接点
-                    if (pnode->visit()) { //找到一个未访问过的邻接点
-                        nodeStack.push(pnode); //邻接点入栈
-                        ++nodeCount; //连通子图顶点数 +1
-                        isAllVisited = false; //顶点（可能）有未访问过的邻接点，还不能出栈
-                        break; //重新进入 while 循环
-                    }
-                }
-                if (isAllVisited) { //若该顶点没有未访问过的邻接点，则将该顶点出栈
-                    nodeStack.pop();
-                }
-            }
-            subGraph.push_back(nodeCount); //由 it 开始的 DFS 生成树探索完毕，将树的顶点数加入记录数组
-        }
-    }
-    cout << subGraph.size() << endl;
-    sort(subGraph.begin(), subGraph.end());
-    for (int i: subGraph) {
-        cout << i << " ";
-    }
+    vector<int> count;
+    for_each(nodes->begin(), nodes->end(), [&count](const Node &i) { if (i.weight) count.push_back(i.weight); });
+    sort(count.begin(), count.end());
+    cout << count.size() << endl;
+    for_each(count.begin(), count.end(), [](int i) { cout << i << " "; });
 }
