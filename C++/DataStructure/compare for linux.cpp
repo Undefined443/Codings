@@ -8,12 +8,12 @@ int main(int argc, char **argv) {
     ifstream file1(argv[1], ios::in);
     ifstream file2(argv[2], ios::in);
     if (!file1.good()) {
-	    cerr << "Failed to open " << argv[1] << endl;
-	    return 1;
+        cerr << "Failed to open " << argv[1] << endl;
+        return 1;
     }
     if (!file2.good()) {
-            cerr << "Failed to open " << argv[1] << endl;
-	    return 1;
+        cerr << "Failed to open " << argv[1] << endl;
+        return 1;
     }
     string str1;
     string str2;
@@ -28,5 +28,5 @@ int main(int argc, char **argv) {
         }
         ++line;
     }
-    cout << "Comparation finished" << endl;
+    cout << "Compare finished" << endl;
 }
