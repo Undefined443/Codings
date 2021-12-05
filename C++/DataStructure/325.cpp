@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -7,11 +8,24 @@ bool *visited;
 int n;
 
 void DFS(int v) {
+    stack<int> nodeStk;
+    nodeStk.push(v);
     cout << v + 1 << " ";
     visited[v] = true;
-    for (int i = 0; i < n; ++i) {
-        if (adjMatrix[i][v] && !visited[i]) {
-            DFS(i);
+    while (!nodeStk.empty()) {
+        int top = nodeStk.top();
+        bool isAllVisited = true;
+        for (int i = 0; i < n; ++i) {
+            if (adjMatrix[top][i] && !visited[i]) {
+                nodeStk.push(i);
+                cout << i + 1 << " ";
+                visited[i] = true;
+                isAllVisited = false;
+                break;
+            }
+        }
+        if (isAllVisited) {
+            nodeStk.pop();
         }
     }
 }
