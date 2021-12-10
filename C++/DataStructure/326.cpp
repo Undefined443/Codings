@@ -35,21 +35,21 @@ void Graph::addEdge(int u, int v, int w) {
 
 int Graph::Dijkstra(int src) {
     using d_v = pair<int, int>; // (d)v，最短路径_顶点
-    priority_queue<d_v, vector<d_v>, greater<d_v>> min_heap; // 创建一个小顶堆（距离最近的顶点在堆顶），这里存储尚未确定最短路径的顶点 (d)v
-    vector<int> dist(n, INF); // 所有顶点的最短路径，初始化所有顶点的最短路径为无穷大
+    priority_queue<d_v, vector<d_v>, greater<d_v>> min_heap; // 创建一个小顶堆（距离最近的顶点在堆顶），存储已经确认可达的顶点 (d)v。每次将距离最短的顶点（堆顶）取出，用它来刷新其邻接点的最短路径
+    bool *flag = new bool[n]{}; // 用于判断是否已经使用过某顶点来刷新其邻接点的最短路径
+    vector<int> dist(n, INF); // 所有顶点的最短路径，初始化所有顶点的最短路径为无穷大（不可达）。通过每次从堆顶取出的顶点（新确定最短路径的顶点）来刷新各顶点的最短路径
     dist[src] = 0; // 源点的最短路径为 0
-    bool *flag = new bool[n]{}; // 用于判断是否已经使用过某顶点作为中转站来刷新其他顶点的最短路径
     min_heap.push(make_pair(0, src)); // 将源点插入小顶堆，使循环开始运行
     while (!min_heap.empty()) {
-        int u = min_heap.top().second; // 取出距离最近的顶点
+        int u = min_heap.top().second; // 取出距离最近的顶点 u
         min_heap.pop();
         if (!flag[u]) {
             for (auto i = adj[u].begin(); i != adj[u].end(); ++i) { // 以 u 为中转站，刷新其邻接点的最短路径
-                int v = i->first; // 邻接点
-                int weight = i->second; // 通往邻接点的边的权
-                if (dist[v] > dist[u] + weight) {
-                    dist[v] = dist[u] + weight;
-                    min_heap.push(make_pair(dist[v], v)); // 若 v 通过 u 中转得到的距离小于直连距离，则刷新它在小顶堆中的值
+                int v = i->first; // u 的邻接点 v
+                int weight = i->second; // 边 (u, v) 的权
+                if (dist[v] > dist[u] + weight) { // 若通过 u 中转可以缩短 (d)v
+                    dist[v] = dist[u] + weight; // 更新 (d)v
+                    min_heap.push(make_pair(dist[v], v)); // 将新的 (d)v 重新加入小顶堆
                 }
             }
             flag[u] = true;
