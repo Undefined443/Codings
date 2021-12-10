@@ -6,14 +6,12 @@ using namespace std;
 int n;
 int **adjMatrix;   //邻接矩阵
 int *InDegree;     //入度
-int *OutDegree;    //出度
 int *Ve;           //顶点的最早发生时间
 
 void init() { //输入邻接矩阵，设定每个顶点的入度和出度，找到源点
     cin >> n;
     Ve = new int[n]{};
     InDegree = new int[n]{};
-    OutDegree = new int[n]{};
     adjMatrix = new int *[n];
     for (int i = 0; i < n; ++i) {
         adjMatrix[i] = new int[n];
@@ -21,8 +19,7 @@ void init() { //输入邻接矩阵，设定每个顶点的入度和出度，找�
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             cin >> adjMatrix[i][j];
-            if (adjMatrix[i][j]) { //若存在边 (i, j)，则 i 的出度 +1，j 的入度 +1
-                ++OutDegree[i];
+            if (adjMatrix[i][j]) { //若存在边 (i, j)，则 j 的入度 +1
                 ++InDegree[j];
             }
         }
