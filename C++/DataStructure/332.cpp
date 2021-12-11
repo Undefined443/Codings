@@ -2,56 +2,40 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-class Node {
-    int val;
-    Node *lChild{};
-    Node *rChild{};
+int **Tree;
 
-public:
-    explicit Node(int i);
-
-    ~Node();
-
-    friend void addNode();
-};
-
-Node::Node(int i) : val(i) {}
-
-Node::~Node() {
-    delete lChild;
-    delete rChild;
+bool checkTree(int root) {
+    if (root != -1) {
+        int lChild = Tree[root][1];
+        int rChild = Tree[root][2];
+        if (lChild != -1 && Tree[root][0] < Tree[lChild][0]) {
+            return false;
+        } else if (rChild != -1 && Tree[root][0] > Tree[rChild][0]) {
+            return false;
+        } else if (checkTree(lChild) && checkTree(rChild)) {
+            return true;
+        }
+    }
+    return true;
 }
 
-bool flag;
-
-map<int, Node*> nodeMap;
-
-Node *findNode(int i) {
-    if (!nodeMap.at(i)) {
-        nodeMap[i] = new Node(i);
+int main() {
+    int n, r;
+    cin >> n >> r;
+    --r;
+    Tree = new int *[n];
+    for (int i = 0; i < n; ++i) {
+        Tree[i] = new int[3];
     }
-    return nodeMap[i];
+    for (int i = 0; i < n; ++i) {
+        cin >> Tree[i][0] >> Tree[i][1] >> Tree[i][2];
+        --Tree[i][1];
+        --Tree[i][2];
+    }
+    cout << (checkTree(r) ? "true" : "false");
 }
-
-void addNode() {
-    int index, lChild, rChild;
-    cin >> index >> lChild >> rChild;
-
-    if (index < lChild || index > rChild) {
-        flag = false;
-    }
-
-    auto root = findNode(index);
-    if (lChild) {
-        auto root_lChild = findNode(lChild);
-        root->lChild = root_lChild;
-    }
-    if (rChild) {
-        auto root_rChild = findNode(rChild);
-        root->rChild = root_rChild;
-    }
-}
-
