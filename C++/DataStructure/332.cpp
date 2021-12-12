@@ -9,19 +9,12 @@ using namespace std;
 
 int **Tree;
 
-bool checkTree(int root) {
+void InOrderTraverse(int root, vector<int> &order) {
     if (root != -1) {
-        int lChild = Tree[root][1];
-        int rChild = Tree[root][2];
-        if (lChild != -1 && Tree[root][0] < Tree[lChild][0]) {
-            return false;
-        } else if (rChild != -1 && Tree[root][0] > Tree[rChild][0]) {
-            return false;
-        } else if (checkTree(lChild) && checkTree(rChild)) {
-            return true;
-        }
+        InOrderTraverse(Tree[root][1], order);
+        order.push_back(Tree[root][0]);
+        InOrderTraverse(Tree[root][2], order);
     }
-    return true;
 }
 
 int main() {
@@ -37,5 +30,13 @@ int main() {
         --Tree[i][1];
         --Tree[i][2];
     }
-    cout << (checkTree(r) ? "true" : "false");
+    vector<int> order;
+    InOrderTraverse(r, order);
+    vector<int> sorted_order(order);
+    sort(sorted_order.begin(), sorted_order.end());
+    if (sorted_order == order) {
+        cout << "true";
+    } else {
+        cout << "false";
+    }
 }
